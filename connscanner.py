@@ -2,6 +2,9 @@ import platform
 import subprocess 
 import shlex
 import csv
+import os
+CSV_FILE = 'connections.csv'
+
 def get_ip_threat_intelligence(ip):
     pass
 
@@ -50,5 +53,37 @@ def delimiter_semicolon(array):
         new_array.append([line[0], ip, port, ip2, port2, line[3]])
     return new_array
 
-print(new_array := delimiter_semicolon(preprocess_ouput()))  # -> print the output for the array of lines
+#print(new_array := delimiter_semicolon(preprocess_ouput()))  # -> print the output for the array of lines
 
+def write_to_new_csv(array):
+    
+    with open(CSV_FILE, 'w', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow(['Protocol', 'Local Address', 'Local Port', 'Destination Address', 'Destination Port', 'State'])
+        writer.writerows(array)
+
+def write_to_existed_csv(array):
+    with open(CSV_FILE, 'a', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerows(array)
+
+def read_past_connections():
+    past_connections = []
+    if os.path.exists(CSV_FILE):
+        with open(CSV_FILE, 'r') as file:
+            reader = csv.reader(file)
+            for line in reader:
+                past_connections.append(line)
+    return past_connections
+
+active_connections = delimiter_semicolon(preprocess_ouput())
+print(active_connections)
+print(len(active_connections))
+past_connections = read_past_connections()
+print(len(past_connections))
+print(len([conn for conn in active_connections if conn not in past_connections]))
+write_to_existed_csv([conn for conn in active_connections if conn not in past_connections])
+
+all_connections = read_past_connections()
+
+print('\n'.join(['\t'.join([str(cell) for cell in row]) for row in all_connections]))
