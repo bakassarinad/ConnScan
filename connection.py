@@ -4,9 +4,16 @@ import re
 import pickle
 import requests
 import socket
-global apikey
+import os
+from dotenv import load_dotenv
 
-apikey = "3bb21e22eebfd24d886aca49509ddeb0cf5df9ae2bf422b6fa0ad37d63cf22350d696c1b092c4b80"
+load_dotenv()
+
+API_KEY = os.getenv('API_KEY')
+if API_KEY:
+    print(f"API Key: {API_KEY}")
+else:
+    print("API Key not found")
 
 IPV4_IPV6_HOST_REGEX = re.compile(
     r'(?:(?:\d{1,3}\.){3}\d{1,3})|'  # IPv4
@@ -91,9 +98,7 @@ def all_addresses(updated_addresses):
     return all_ips
 
 
-run_command()
-addresses = extract_destination_address(run_command())
-all_ip_addresses = all_addresses(addresses)
+
 #print(all_ip_addresses)
 #run_command()
 
@@ -119,8 +124,7 @@ def update_file(addresses):
     write_file(updated_addresses)
     return updated_addresses
     
-updated_addresses = update_file(all_ip_addresses)
-print(updated_addresses)
+
 #updated_addresses = update_file(addresses)
 #print(updated_addresses)
 #print(len(updated_addresses))
@@ -142,7 +146,7 @@ def check_ip(ip):
     }
 
     headers = {
-        'Key': apikey,
+        'Key': API_KEY,
         'Accept': 'application/json',
     }
 
@@ -171,12 +175,25 @@ def check_ip(ip):
         print(f"Request exception occurred: {request_exception}")
 
 
-for ip in updated_addresses:
-    print(check_ip(ip))
-'''updated_addresses = {
-    "google.com", "8.8.8.8", "2606:4700:4700::1111", "yahoo.co.uk", 
-    "microsoft.com", "192.168.1.1", "sub.domain-example.org"
-}'''
+if __name__ == "__main__":
+    run_command()
+    addresses = extract_destination_address(run_command())
 
+    updated_addresses = update_file(addresses)
+    print(updated_addresses)
+    all_ip_addresses = all_addresses(addresses)
+    for ip in updated_addresses:
+        print(check_ip(ip))
+
+
+
+
+'''updated_addresses = "google.com, 8.8.8.8, 2606:4700:4700::1111, yahoo.co.uk, microsoft.com 192.168.1.1 sub.domain-example.org"
+
+addresses = extract_destination_address(updated_addresses)
+all_ip_addresses = all_addresses(addresses)
+print(all_ip_addresses)
+for ip in all_ip_addresses:
+    print(check_ip(ip)) '''
 #print(get_hostnames(updated_addresses))
 #print(get_ip_addresses_from_hostname(get_hostnames(updated_addresses)))
