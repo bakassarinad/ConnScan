@@ -1,8 +1,8 @@
 import platform
 import subprocess 
-import shlex
 import csv
 import os
+
 CSV_FILE = 'connections.csv'
 
 def get_ip_threat_intelligence(ip):
@@ -77,11 +77,11 @@ def read_past_connections():
     return past_connections
 
 active_connections = delimiter_semicolon(preprocess_ouput())
-print(active_connections)
-print(len(active_connections))
+#print(active_connections)
+#print(len(active_connections))
 past_connections = read_past_connections()
-print(len(past_connections))
-print(len([conn for conn in active_connections if conn not in past_connections]))
+#print(len(past_connections))
+#хххххххххххххххххххххххххххххххххххххххх8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888уйф print(len([conn for conn in active_connections if conn not in past_connections]))
 write_to_existed_csv([conn for conn in active_connections if conn not in past_connections])
 
 all_connections = read_past_connections()
