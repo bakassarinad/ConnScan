@@ -18,5 +18,5 @@ python<version> connection.py
 # Example output:
 
 tested on Windows platform:
-![alt text](image.png)
+![alt text](windows.png)
 
