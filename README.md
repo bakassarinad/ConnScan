@@ -12,7 +12,7 @@ pip install -r requirements.txt
 Usage:
 
 ```
-python<version> connection.py
+python connection.py
 ```
 
 # Example output:
@@ -20,3 +20,5 @@ python<version> connection.py
 tested on Windows platform:
 ![alt text](windows.png)
 
+tested on Linux platform:
+![alt text](linux.png)
