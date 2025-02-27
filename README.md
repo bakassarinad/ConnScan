@@ -18,7 +18,7 @@ python connection.py
 # Example output:
 
 tested on Windows platform:
-![alt text](windows.png)
+![alt text](image.png)
 
 tested on Linux platform:
-![alt text](linux.png)
+![alt text](image-1.png)
