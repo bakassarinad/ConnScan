@@ -12,7 +12,7 @@ pip install -r requirements.txt
 Usage:
 
 ```
-python<version> connection.py
+python connection.py
 ```
 
 # Example output:
